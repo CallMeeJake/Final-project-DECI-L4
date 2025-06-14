@@ -5,7 +5,7 @@ import path from "path";
 const routes = express.Router();
 
 routes.get('/', (req, res) => {
-    res.send('we bouta resize in this ho');
+    res.send('resize');
 });
 
 function resize(imgPath: string, width: number, height: number): Promise<string> {
