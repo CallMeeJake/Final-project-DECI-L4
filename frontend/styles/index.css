@@ -1,0 +1,117 @@
+body{
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+img{
+  display: block;
+  margin:auto;
+  text-align: center;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  background: #00853C;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background: rgb(4, 155, 79);
+}
+/* no reason for the color i just like the color green */
+
+.menu{
+  display:flex;
+  flex-direction: column;
+}
+
+.action{
+  text-align: center;
+  margin: auto;
+  margin-top: 20px;
+  width: 50%;
+  border: 3px solid green;
+  padding: 10px;
+}
+
+.gallery {
+  position: center;
+  width: 300px;
+  max-width: 90%;
+}
+
+.inputs{
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 5px;
+}
+
+.gallery .imgs {
+  display: flex;
+  flex-direction: row;
+}
+
+.gallery img {
+  width: 100%;
+  height: 200px;
+  height: auto;
+  display: none;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.gallery img.active {
+  display: block;
+}
+
+.placeholderGen {
+  display: grid;
+  justify-content: center;
+}
+
+.placeholderGen .inputs {
+  display: flex;
+  justify-content: space-around;
+  width: 300px;
+}
+
+.actions{
+  display: flex;
+  justify-content: space-around;
+}
+
+img .active {
+  width: 300px;
+  height: 200px;
+}
+
+input[type="number"] {
+  width: 50px;
+}
+
+
+#resizingStation button,
+#generateImg{
+  height: 40px;
+  width: 300px;
+  text-align: center;
+}
+
+.buttons {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+#preview{
+  width: 300px;
+}
+
+#resizant{
+  border-radius: 8px;
+  margin-bottom: 5px;
+}

@@ -3,23 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script>
-      fetch('http://localhost:3000')
-        .then(res => res.json())
-        .then(data => {
-          console.log(data);
-          document.getElementById('output').textContent = JSON.stringify(data);
-        })
-    .catch(err => {
-      console.error(err);
-      document.getElementById('output').textContent = 'Error: ' + err.message;
-    })
-    </script>
+    <title>Image Processing WebApp</title>
+    <link rel="stylesheet" href="styles/index.css">
 </head>
 <body>
-    <form action="/profile" method="post" enctype="multipart/form-data">
-  <input type="file" name="resizant" />
+  <div class="menu"> 
+    <div class="action" id="imageUpload">
+      <h2>Upload Image To Storage</h2>
+      <img src="" alt="Preview Here!" id="preview">
+      <form action="/profile" method="post" enctype="multipart/form-data" id="uploadForm"> <br>
+        <input type="file" name="resizant" id="fileInput" accept="image/*" required/> 
+        <button type="submit" class="submit">Upload Image</button>
+      </form>
+    </div>
+    <div class="action" id="resizer">
+      <h2>Resize Image (Uploaded or Stock)</h2>
+      <div class="actions">
+        <div class="gallery">
+          <div id="imgs">
+            <img class="galleryImg active" src="../src/images/fjord.jpg">
+            <img class="galleryImg" src="../src/images/encenadaport.jpg">
+            <img class="galleryImg" src="../src/images/santamonica.jpg">
+            <img class="galleryImg" src="../src/images/icelandwaterfall.jpg">
+            <img class="galleryImg" src="../src/images/palmtunnel.jpg">
+          </div>
+          <div class="buttons">
+            <button onclick="prevImage()">Prev</button>
+            <button onclick="selectImage()">Choose</button>
+            <button onclick="nextImage()">Next</button>
+          </div>
+        </div>
+        <div id="resizingStation">
+          <img src="" alt="Image to be Resized!" style="height: 200px;" id="resizant">
+          <div class="inputs">
+            <div>Width: <input type="number" name="width" id="widthResize"></div>
+            <div>Height:<input type="number" name="height" id="heightResize"></div> <br>
+          </div>  
+          <button id="resize">Resize</button><br>
+          <a id="resizeLink" target="_blank" href=""></a>
+        </div>
+      </div>  
+    </div>
+    <div class="action" id="placeholderGen">
+      <h2>Generate a Placeholder Image</h2>
+      <div class="placeholderGen">
+        <div class="inputs">
+          <div>Width:<input type="number" name="width" id="widthPH"></div>
+          <div>Height:<input type="number" name="height" id="heightPH"></div> <br>
+        </div>  
+        <button id="generateImg">Generate Image</button><br>
+        <a id="placeholderImg" target="_blank" href=""></a>
+      </div>
+    </div>
+  </div>
 </form>
 </body>
+<script src="../build/frontend/scripts/index.js"></script>
 </html>

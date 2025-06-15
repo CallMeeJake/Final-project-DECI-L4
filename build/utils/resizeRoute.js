@@ -12,17 +12,26 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const resize_1 = require("../../utils/resize");
-const sharp_1 = __importDefault(require("sharp"));
+const express_1 = __importDefault(require("express"));
+const resize_1 = require("./resize");
 const path_1 = __importDefault(require("path"));
-describe('Testing image processing', () => {
-    it('dimensions of image should be 300 x 200', () => __awaiter(void 0, void 0, void 0, function* () {
-        const filename = "fjord";
-        const width = 300;
-        const height = 200;
-        const outputPath = path_1.default.resolve(`./images/resized/${filename}-${width}x${height}.jpg`);
-        yield (0, resize_1.resizeImage)(filename, width, height);
-        const metadata = yield (0, sharp_1.default)(outputPath).metadata();
-        expect(`${metadata.width} x ${metadata.height}`).toEqual("300 x 200");
-    }));
-});
+const router = express_1.default.Router();
+router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { filename, width, height } = req.query;
+    console.log("Resize request:", { filename, width, height });
+    if (!filename || !width || !height) {
+        res.status(400).send("Missing required query parameters.");
+        return;
+    }
+    const widthNum = parseInt(width, 10);
+    const heightNum = parseInt(height, 10);
+    try {
+        const imagePath = yield (0, resize_1.resizeImage)(filename, widthNum, heightNum);
+        res.sendFile(path_1.default.resolve(imagePath));
+    }
+    catch (error) {
+        console.error("Resize error:", error);
+        res.status(500).send("Error resizing image");
+    }
+}));
+exports.default = router;

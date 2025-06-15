@@ -1,15 +1,21 @@
 import express from "express";
-import multer from "multer";
 import upload from "./middleware/upload"
+import multer from "multer";
+
 
 const routes = express.Router();
 
-routes.post('/', upload.single("resizant"), (req, res) => {
-    if(!req.file){
-       res.status(400).send("Please upload a file or upload a file with the correct extension (.jpg)");
-       return;
+routes.post('/', (req, res) => {
+  upload.single('resizant')(req, res, (err) => {
+    if (err instanceof multer.MulterError || err) {
+      return res.status(500).json({ error: err.message });
     }
-    res.status(200).send('File uploaded successfully');
+    if (!req.file) {
+      res.status(400).json({ error: 'No file uploaded' });
+      return;
+    }
+    res.json({ filename: req.file.filename });
+  });
 })
 
 export default routes;

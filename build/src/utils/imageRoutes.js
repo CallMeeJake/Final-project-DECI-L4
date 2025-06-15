@@ -8,7 +8,7 @@ const upload_1 = __importDefault(require("./middleware/upload"));
 const multer_1 = __importDefault(require("multer"));
 const routes = express_1.default.Router();
 routes.post('/', (req, res) => {
-    upload_1.default.single('test')(req, res, (err) => {
+    upload_1.default.single('resizant')(req, res, (err) => {
         if (err instanceof multer_1.default.MulterError || err) {
             return res.status(500).json({ error: err.message });
         }

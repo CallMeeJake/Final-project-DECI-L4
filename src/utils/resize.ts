@@ -1,28 +1,32 @@
 import sharp from "sharp";
-import express from "express";
 import path from "path";
+import fs from "fs";
 
-const routes = express.Router();
+const fullImagePath = path.resolve(__dirname, "../../src/images");
+const resizedPath = path.resolve(__dirname, "../../src/images/resized");
 
-routes.get('/', (req, res) => {
-    res.send('resize');
-});
+export const resizeImage = async (filename: string, width: number, height: number): Promise<string> => {
+  const inputPath = path.join(fullImagePath, `${filename}.jpg`);
 
-function resize(imgPath: string, width: number, height: number): Promise<string> {
-    const imgName = path.basename(imgPath, path.extname(imgPath));
-    const outputPath = `images/resized/${imgName}-resized.jpg`;
+  const outputFilename = `${filename}-${width}x${height}.jpg`;
+  const outputPath = path.join(resizedPath, outputFilename);
 
-    return sharp(imgPath)
-        .resize(width, height)
-        .toFile(outputPath)
-        .then(() => outputPath)
-        .catch(err => {
-            console.error(`Error resizing image: ${err}`);
-            throw err;
-        });
-}
+  if (!fs.existsSync(resizedPath)) {
+    fs.mkdirSync(resizedPath, { recursive: true });
+  }
 
-export = {
-    resize,
-    routes
+  if (fs.existsSync(outputPath)) {
+    console.log(`already processed, Using cached image: ${outputPath}`);
+    return outputPath;
+  }
+
+  try {
+    await sharp(inputPath)
+      .resize(width, height)
+      .toFile(outputPath);
+    return outputPath;
+  } catch (err) {
+    console.error("Error resizing image:", err);
+    throw err;
+  }
 };
